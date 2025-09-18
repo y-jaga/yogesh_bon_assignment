@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const userRoute = require("./src/routes/user.route.js");
 const billRoute = require("./src/routes/bill.route.js");
+const rewardRoute = require("./src/routes/reward.route.js");
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 //routes
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/bill", billRoute);
+app.use("/api/v1/reward", rewardRoute);
 
 module.exports = { app };

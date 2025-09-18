@@ -7,6 +7,17 @@ const isBillPaidOnTime = (paymentDate, dueDate) => {
   return paymentDate <= dueDate;
 };
 
+const getCurrencySymbol = (code) => {
+  const symbols = {
+    USD: "$",
+    INR: "₹",
+    EUR: "€",
+    GBP: "£",
+  };
+
+  return symbols[code] || code;
+};
+
 const generateBill = asyncHanlder(async (req, res) => {
   const { userId, billAmount, currency, dueDate } = req.body;
 
@@ -54,13 +65,15 @@ const acceptBillPayment = asyncHanlder(async (req, res) => {
   if (amountPaid !== existingBill.billAmount) {
     throw new ApiError(
       400,
-      `Invalid payment amount. Please pay the exact bill amount of ${existingBill.billAmount} ${existingBill.currency}.`
+      `Invalid payment amount. Please pay the exact bill amount of ${getCurrencySymbol(
+        existingBill.currency
+      )}${existingBill.billAmount}.`
     );
   }
 
   const paymentData = {
     transanctionId,
-    amountPaid: `${amountPaid} ${existingBill.currency}`,
+    amountPaid: `${getCurrencySymbol(existingBill.currency)}${amountPaid}`,
     paymentDate: new Date(),
     paidOnTime: isBillPaid,
   };
@@ -74,4 +87,4 @@ const acceptBillPayment = asyncHanlder(async (req, res) => {
     .json(new ApiResponse(200, paidBill, "Bill paid successfully."));
 });
 
-module.exports = { generateBill, acceptBillPayment };
+module.exports = { generateBill, acceptBillPayment, getCurrencySymbol };

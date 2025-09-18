@@ -29,6 +29,11 @@ const rewardSchema = new Schema(
       type: Date,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["ACTIVE", "EXPIRED"],
+      default: "EXPIRED",
+    },
   },
   { timestamps: true }
 );

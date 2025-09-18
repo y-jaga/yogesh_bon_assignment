@@ -6,6 +6,6 @@ const {
 } = require("../controllers/bill.controller.js");
 
 router.route("/").post(generateBill);
-router.route("/pay").post(acceptBillPayment);
+router.route("/pay").patch(acceptBillPayment);
 
 module.exports = router;

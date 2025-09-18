@@ -5,6 +5,7 @@ const paymentSchema = new Schema({
   transanctionId: {
     type: String,
     required: true,
+    unique: true,
   },
   amountPaid: {
     type: String,
